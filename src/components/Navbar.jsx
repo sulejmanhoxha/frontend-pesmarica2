@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+
 const Navbar = () => {
 	const [state, setState] = useState(false);
 
-	// Replace javascript:void(0) paths with your paths
 	const navigation = [
 		{ title: "Home", path: "/" },
 		{ title: "Artists", path: "/artists" },
@@ -11,17 +11,35 @@ const Navbar = () => {
 		{ title: "About", path: "/about" },
 	];
 
+	const toggleNavbar = () => {
+		setState(!state);
+	};
+
+	const closeNavbar = () => {
+		setState(false);
+	};
+
+	const handleLinkClick = () => {
+		if (state) {
+			closeNavbar();
+		}
+	};
+
 	return (
-		<nav className="fixed w-full border-b bg-white  md:border-none md:text-sm">
+		<nav className="fixed z-50 w-full border-b bg-white md:border-none md:text-sm">
 			<div className="mx-auto max-w-screen-xl items-center px-4 md:flex md:px-8">
 				<div className="flex items-center justify-between py-3 md:block md:py-5">
-					<Link to="/" className="text-lg uppercase">
+					<Link
+						to="/"
+						onClick={closeNavbar}
+						className="text-lg uppercase"
+					>
 						Guitarists
 					</Link>
 					<div className="md:hidden">
 						<button
 							className="text-gray-500 hover:text-gray-800"
-							onClick={() => setState(!state)}
+							onClick={toggleNavbar}
 						>
 							{state ? (
 								<svg
@@ -61,22 +79,25 @@ const Navbar = () => {
 					}`}
 				>
 					<ul className="items-center justify-end space-y-6 md:flex md:space-x-6 md:space-y-0">
-						{navigation.map((item, idx) => {
-							return (
-								<li
-									key={idx}
-									className="text-gray-700 hover:text-indigo-600"
+						{navigation.map((item, idx) => (
+							<li
+								key={idx}
+								className="text-gray-700 hover:text-indigo-600"
+							>
+								<Link
+									onClick={handleLinkClick}
+									to={item.path}
+									className="block"
 								>
-									<Link to={item.path} className="block">
-										{item.title}
-									</Link>
-								</li>
-							);
-						})}
+									{item.title}
+								</Link>
+							</li>
+						))}
 						<span className="hidden h-6 w-px bg-gray-300 md:block"></span>
 						<div className="items-center gap-x-6 space-y-3 md:flex md:space-y-0">
 							<li>
 								<Link
+									onClick={closeNavbar}
 									to="/login"
 									className="block rounded-lg border py-3 text-center text-gray-700 hover:text-indigo-600 md:border-none"
 								>
@@ -85,6 +106,7 @@ const Navbar = () => {
 							</li>
 							<li>
 								<Link
+									onClick={closeNavbar}
 									to="/signin"
 									className="block rounded-lg bg-indigo-600 px-4 py-3 text-center font-medium text-white shadow hover:bg-indigo-500 active:bg-indigo-700 active:shadow-none md:inline"
 								>
