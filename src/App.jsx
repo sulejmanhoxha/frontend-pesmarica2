@@ -1,0 +1,36 @@
+import React from "react";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import { Route, Routes } from "react-router-dom";
+import Artists from "./pages/Artists";
+import Home from "./pages/Home";
+import ViewArtist from "./pages/ViewArtist";
+import Songs from "./pages/Songs";
+import ViewSong from "./pages/ViewSong";
+import About from "./pages/About";
+import Missing from "./pages/Missing";
+
+import { DataProvider } from "./context/DataContext";
+
+const App = () => {
+	return (
+		<>
+			<DataProvider>
+				<Navbar />
+				<div className="h-20"></div>
+				<Routes>
+					<Route index path="/" element={<Home />} />
+					<Route path="/artists" element={<Artists />} />
+					<Route path="/artists/:id" element={<ViewArtist />} />
+					<Route path="/songs" element={<Songs />} />
+					<Route path="/songs/:id" element={<ViewSong />} />
+					<Route path="/about" element={<About />} />
+					<Route path="*" element={<Missing />} />
+				</Routes>
+				<Footer />
+			</DataProvider>
+		</>
+	);
+};
+
+export default App;
