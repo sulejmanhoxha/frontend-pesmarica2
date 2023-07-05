@@ -1,4 +1,3 @@
-import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 const Navbar = () => {
@@ -77,20 +76,20 @@ const Navbar = () => {
 						<span className="hidden h-6 w-px bg-gray-300 md:block"></span>
 						<div className="items-center gap-x-6 space-y-3 md:flex md:space-y-0">
 							<li>
-								<a
-									href="javascript:void(0)"
+								<Link
+									to="/login"
 									className="block rounded-lg border py-3 text-center text-gray-700 hover:text-indigo-600 md:border-none"
 								>
 									Log in
-								</a>
+								</Link>
 							</li>
 							<li>
-								<a
-									href="javascript:void(0)"
+								<Link
+									to="/signin"
 									className="block rounded-lg bg-indigo-600 px-4 py-3 text-center font-medium text-white shadow hover:bg-indigo-500 active:bg-indigo-700 active:shadow-none md:inline"
 								>
 									Sign in
-								</a>
+								</Link>
 							</li>
 						</div>
 					</ul>
