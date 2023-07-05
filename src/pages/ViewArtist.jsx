@@ -5,16 +5,13 @@ import api from "../api/pesmarica.js";
 const ViewArtist = () => {
 	const { id } = useParams();
 	const [artist, setArtist] = useState("");
-	const [artistSongs, setArtistSongs] = useState("");
-	const [artistName, setArtistName] = useState("");
-	const [artistID, setArtistID] = useState("");
+	const [artistSongs, setArtistSongs] = useState([]);
 
 	useEffect(() => {
 		const fetchSong = async () => {
 			try {
 				const response = await api.get(`/api/artists/${id}/songs/`);
 				setArtistSongs(response.data);
-				setArtistName(response.data.artist.name);
 			} catch (err) {
 				if (err.response) {
 					console.log(err.response.data);
@@ -25,48 +22,42 @@ const ViewArtist = () => {
 				}
 			}
 		};
+
 		fetchSong();
 	}, [id]);
 
+	useEffect(() => {
+		if (artistSongs.length > 0) {
+			const firstSong = artistSongs[0];
+			setArtist(firstSong.artist.name);
+		}
+	}, [artistSongs]);
 	return (
 		<>
-			<div className="container mx-auto  ">
-				<div className="mb-4 grid grid-cols-4 items-center gap-4 rounded-lg bg-slate-100 p-5">
-					<p className="col-span-1 text-lg font-bold">Artist</p>
-					<Link
-						to={`/artists/${artistID}`}
-						className="col-span-3 underline underline-offset-4 hover:text-indigo-600"
-					>
-						{artistName}
-					</Link>
-				</div>
-
-				<div className="mb-4 grid grid-cols-4 items-center gap-4 rounded-lg bg-slate-100 p-5 ">
-					<p className="col-span-1 text-lg font-bold">Song name</p>
-					<p className="col-span-3"> {song.title}</p>
-				</div>
-
-				<div className="mb-4 grid grid-cols-4 items-center gap-4 rounded-lg bg-slate-100 p-5 ">
-					<p className="col-span-1 text-lg font-bold">
-						Year of release
-					</p>
-					<p className="col-span-3"> {song.year}</p>
-				</div>
-
-				<div className="mb-4 grid grid-cols-4 items-center gap-4 rounded-lg bg-slate-100 p-5 ">
-					<p className="col-span-1 text-lg font-bold">User</p>
-					<p className="col-span-3"> {song.owner}</p>
-				</div>
-
-				<div className="mb-4 grid grid-cols-4 items-center gap-4 rounded-lg bg-slate-100 p-5 ">
-					<p className="col-span-1 text-lg font-bold">Date created</p>
-					<p className="col-span-3"> {song.created_at}</p>
-				</div>
-
-				<div className="mb-4 gap-8 rounded-lg bg-slate-100 p-5 ">
-					<p className="mb-6 text-lg font-bold">Lyrics</p>
-					<pre className="font-mono">{song.lyrics}</pre>
-				</div>
+			<div className="min-h- container mx-auto ">
+				<ul className="divide-y divide-slate-100">
+					<li className="flex items-start gap-4 rounded-t-2xl bg-slate-300 px-4 py-3">
+						<div className="flex min-h-[2rem] flex-col items-start justify-center gap-0">
+							<h4 className="text-lg font-bold uppercase text-slate-700 ">
+								{artist}
+							</h4>
+						</div>
+					</li>
+					{artistSongs.map((song) => (
+						<li
+							key={song.id}
+							className="flex items-start gap-4 px-4 py-3"
+						>
+							<div className="flex min-h-[2rem] flex-col items-start justify-center gap-0">
+								<h4 className="text-base text-slate-700 ">
+									<Link to={`/songs/${song.id}`}>
+										{song.title}
+									</Link>
+								</h4>
+							</div>
+						</li>
+					))}
+				</ul>
 			</div>
 		</>
 	);
