@@ -2,25 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
-	const footerNavs = [
-		{
-			href: "/",
-			name: "Home",
-		},
-		{
-			href: "/",
-			name: "Artists",
-		},
-		{
-			href: "/",
-			name: "Songs",
-		},
-		{
-			href: "/",
-			name: "About",
-		},
-	];
-
 	return (
 		<footer className="mx-auto max-w-screen-xl bg-white px-4 py-5 text-gray-500 md:px-8">
 			<div className="max-w-lg sm:mx-auto sm:text-center">
@@ -34,11 +15,18 @@ const Footer = () => {
 				</p>
 			</div>
 			<ul className="mt-8 items-center justify-center space-y-5 sm:flex sm:space-x-4 sm:space-y-0">
-				{footerNavs.map((item, idx) => (
-					<li key={idx} className=" hover:text-gray-800">
-						<Link to={item.href}>{item.name}</Link>
-					</li>
-				))}
+				<li key={1} className=" hover:text-gray-800">
+					<Link to="/">Home</Link>
+				</li>
+				<li key={2} className=" hover:text-gray-800">
+					<Link to="/artists">Artists</Link>
+				</li>
+				<li key={3} className=" hover:text-gray-800">
+					<Link to="/songs">Songs</Link>
+				</li>
+				<li key={4} className=" hover:text-gray-800">
+					<Link to="/about">About</Link>
+				</li>
 			</ul>
 		</footer>
 	);
