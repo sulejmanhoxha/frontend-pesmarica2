@@ -1,15 +1,15 @@
 import { useContext } from "react";
 import Card from "../components/Card";
 
-import bijelo_dugme from "../images/bijelo-dugme.jpeg";
-import aca_lukas from "../images/aca-lukas.jpg";
-import aco_pejovic from "../images/aco-pejovic.jpg";
-import dino_merlin from "../images/dino-merlin.jpg";
-import divlje_jagode from "../images/divlje-jagode.jpg";
-import halid_besic from "../images/halid-besic.jpeg";
-import parni_valjak from "../images/parni-valjak.jpg";
-import riblja_corba from "../images/riblja-corba.jpg";
-import sinan_sakic from "../images/sinan-sakic.jpeg";
+import bijelo_dugme from "../images/artists/bijelo-dugme.jpeg";
+import aca_lukas from "../images/artists/aca-lukas.jpg";
+import aco_pejovic from "../images/artists/aco-pejovic.jpg";
+import dino_merlin from "../images/artists/dino-merlin.jpg";
+import divlje_jagode from "../images/artists/divlje-jagode.jpg";
+import halid_besic from "../images/artists/halid-besic.jpeg";
+import parni_valjak from "../images/artists/parni-valjak.jpg";
+import riblja_corba from "../images/artists/riblja-corba.jpg";
+import sinan_sakic from "../images/artists/sinan-sakic.jpeg";
 import Hero from "../components/Hero";
 import List from "../components/LatestSongsList";
 
