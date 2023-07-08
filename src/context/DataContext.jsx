@@ -7,16 +7,25 @@ const DataContext = createContext({});
 
 export const DataProvider = ({ children }) => {
 	const [latestSongs, setLatestSongs] = useState([]);
+	const [numberOfSongPages, setNumberOfSongPages] = useState([]);
+	const [currentSongPage, setCurrentSongPage] = useState(1);
+
 	const [artists, setArtists] = useState([]);
+	const [numberOfArtistPage, setNumberOfArtistPage] = useState([]);
+	const [currentArtistPage, setCurrentArtistPage] = useState(1);
+
+	const [user, setUser] = useState("");
+	const [userToken, setUserToken] = useState("");
 
 	useEffect(() => {
 		const fetchLatestSongs = async () => {
 			try {
 				const response = await api.get(
-					"/api/songs/?ordering=-created_at"
+					`/api/songs/?ordering=-created_at&page=${currentSongPage}`
 				);
 
 				const responseData = response.data;
+				setNumberOfSongPages(Math.floor(responseData.count / 10) + 1);
 				setLatestSongs(responseData.results);
 			} catch (err) {
 				if (err.response) {
@@ -28,11 +37,18 @@ export const DataProvider = ({ children }) => {
 				}
 			}
 		};
+		fetchLatestSongs();
+	}, [currentSongPage]);
 
+	useEffect(() => {
 		const fetchArtists = async () => {
 			try {
-				const response = await api.get("/api/artists/");
+				const response = await api.get(
+					`/api/artists/?ordering=name&page=${currentArtistPage}`
+				);
+
 				const responseData = response.data;
+				setNumberOfArtistPage(Math.floor(responseData.count / 10) + 1);
 				setArtists(responseData.results);
 			} catch (err) {
 				if (err.response) {
@@ -44,9 +60,8 @@ export const DataProvider = ({ children }) => {
 				}
 			}
 		};
-		fetchLatestSongs();
 		fetchArtists();
-	}, []);
+	}, [currentArtistPage]);
 
 	return (
 		<DataContext.Provider
@@ -55,6 +70,18 @@ export const DataProvider = ({ children }) => {
 				setLatestSongs,
 				artists,
 				setArtists,
+				numberOfSongPages,
+				setNumberOfSongPages,
+				currentSongPage,
+				setCurrentSongPage,
+				numberOfArtistPage,
+				setNumberOfArtistPage,
+				currentArtistPage,
+				setCurrentArtistPage,
+				user,
+				setUser,
+				userToken,
+				setUserToken,
 			}}
 		>
 			{children}

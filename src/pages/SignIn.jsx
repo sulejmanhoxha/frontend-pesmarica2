@@ -1,6 +1,36 @@
-import { Link } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import DataContext from "../context/DataContext";
+import api from "../api/pesmarica";
 
 const SignIn = () => {
+	const [username, setUsername] = useState("");
+	const [password, setPassword] = useState("");
+	const [email, setEmail] = useState("");
+	const { setUser } = useContext(DataContext);
+	const navigate = useNavigate();
+
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		try {
+			const response = await api.post("api/auth/users/", {
+				email: email,
+				username: username,
+				password: password,
+			});
+			setUser(response.data);
+			navigate("/login");
+		} catch (err) {
+			if (err.response) {
+				console.log(err.response.data);
+				console.log(err.response.status);
+				console.log(err.response.headers);
+			} else {
+				console.log(`Error: ${err.message}`);
+			}
+		}
+	};
+
 	return (
 		<section className="container mx-auto">
 			<div className="flex flex-1 flex-col justify-center overflow-hidden px-4 py-12 sm:px-6  xl:px-24">
@@ -15,12 +45,7 @@ const SignIn = () => {
 					</div>
 					<div className="mt-8">
 						<div className="mt-6">
-							<form
-								action="#"
-								method="POST"
-								className="space-y-6"
-								data-bitwarden-watching={1}
-							>
+							<form className="space-y-6" onSubmit={handleSubmit}>
 								<div className="grid grid-cols-1 gap-2  md:grid-cols-2">
 									<div>
 										<label
@@ -34,10 +59,13 @@ const SignIn = () => {
 												id="username"
 												name="username"
 												type="text"
-												autoComplete="username"
 												required
 												placeholder="Your Username"
 												className="block w-full transform rounded-lg border border-transparent bg-gray-50 px-5 py-3 text-base text-neutral-600 placeholder-gray-300 transition duration-500 ease-in-out focus:border-transparent focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
+												value={username}
+												onChange={(e) => {
+													setUsername(e.target.value);
+												}}
 											/>
 										</div>
 									</div>
@@ -53,10 +81,13 @@ const SignIn = () => {
 												id="password"
 												name="password"
 												type="password"
-												autoComplete="current-password"
-												required=""
+												required
 												placeholder="Your Password"
 												className="block w-full transform rounded-lg border border-transparent bg-gray-50 px-5 py-3 text-base text-neutral-600 placeholder-gray-300 transition duration-500 ease-in-out focus:border-transparent focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
+												value={password}
+												onChange={(e) => {
+													setPassword(e.target.value);
+												}}
 											/>
 										</div>
 									</div>
@@ -73,10 +104,13 @@ const SignIn = () => {
 											id="email"
 											name="email"
 											type="email"
-											autoComplete="email"
-											required=""
+											required
 											placeholder="Your Email"
 											className="block w-full transform rounded-lg border border-transparent bg-gray-50 px-5 py-3 text-base text-neutral-600 placeholder-gray-300 transition duration-500 ease-in-out focus:border-transparent focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
+											value={email}
+											onChange={(e) => {
+												setEmail(e.target.value);
+											}}
 										/>
 									</div>
 								</div>

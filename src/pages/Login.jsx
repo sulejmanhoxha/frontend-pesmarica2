@@ -1,6 +1,62 @@
-import { Link } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import DataContext from "../context/DataContext";
+import api from "../api/pesmarica";
 
 const Login = () => {
+	const [username, setUsername] = useState("");
+	const [password, setPassword] = useState("");
+	const { setUserToken, userToken, setUser } = useContext(DataContext);
+	const navigate = useNavigate();
+
+	const getUserCredentials = async () => {
+		try {
+			const response = await api.post("api/auth/users/me/", null, {
+				headers: {
+					Authorization: `Token ${userToken.auth_token}`,
+				},
+			});
+			setUser(response.data);
+			navigate("/");
+		} catch (err) {
+			if (err.response) {
+				console.log(err.response.data);
+				console.log(err.response.status);
+				console.log(err.response.headers);
+			} else {
+				console.log(`Error: ${err.message}`);
+			}
+		}
+	};
+
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		try {
+			const response = await api.post("api/auth/token/login/", {
+				username: username,
+				password: password,
+			});
+			const token = response.data.auth_token;
+			setUserToken(token);
+
+			const response2 = await api.get("api/auth/users/me/", {
+				headers: {
+					Authorization: `Token ${token}`,
+				},
+			});
+			setUser(response2.data);
+			navigate("/");
+		} catch (err) {
+			if (err.response) {
+				console.log(err.response.data);
+				console.log(err.response.status);
+				console.log(err.response.headers);
+			} else {
+				console.log(`Error: ${err.message}`);
+			}
+		}
+	};
+
 	return (
 		<section className="container mx-auto">
 			<div className="flex flex-1 flex-col justify-center overflow-hidden px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
@@ -15,28 +71,26 @@ const Login = () => {
 					</div>
 					<div className="mt-8">
 						<div className="mt-6">
-							<form
-								action="#"
-								method="POST"
-								className="space-y-6"
-								data-bitwarden-watching={1}
-							>
+							<form onSubmit={handleSubmit} className="space-y-6">
 								<div>
 									<label
-										htmlFor="email"
+										htmlFor="username"
 										className="block text-sm font-medium text-neutral-600"
 									>
-										Email address
+										Username
 									</label>
 									<div className="mt-1">
 										<input
-											id="email"
-											name="email"
-											type="email"
-											autoComplete="email"
-											required=""
-											placeholder="Your Email"
+											id="username"
+											name="username"
+											type="text"
+											required
+											placeholder="Your username"
 											className="block w-full transform rounded-lg border border-transparent bg-gray-50 px-5 py-3 text-base text-neutral-600 placeholder-gray-300 transition duration-500 ease-in-out focus:border-transparent focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
+											value={username}
+											onChange={(e) => {
+												setUsername(e.target.value);
+											}}
 										/>
 									</div>
 								</div>
@@ -56,6 +110,10 @@ const Login = () => {
 											required=""
 											placeholder="Your Password"
 											className="block w-full transform rounded-lg border border-transparent bg-gray-50 px-5 py-3 text-base text-neutral-600 placeholder-gray-300 transition duration-500 ease-in-out focus:border-transparent focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
+											value={password}
+											onChange={(e) => {
+												setPassword(e.target.value);
+											}}
 										/>
 									</div>
 								</div>

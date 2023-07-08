@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
-
+import DataContext from "../context/DataContext";
+import DropdownBasic from "./UserDropdown";
 const Navbar = () => {
 	const [state, setState] = useState(false);
+	const { setCurrentSongPage, userToken, user } = useContext(DataContext);
 
 	const navigation = [
 		{ title: "Home", path: "/" },
@@ -19,14 +21,18 @@ const Navbar = () => {
 		setState(false);
 	};
 
-	const handleLinkClick = () => {
+	const handleLinkClick = (item) => {
 		if (state) {
 			closeNavbar();
+		}
+
+		if (item.title === "Home") {
+			setCurrentSongPage(1);
 		}
 	};
 
 	return (
-		<nav className="fixed z-50 w-full border-b bg-white md:border-none md:text-sm">
+		<nav className=" fixed z-50  w-full border-b bg-white md:border-none md:text-sm">
 			<div className="mx-auto max-w-screen-xl items-center px-4 md:flex md:px-8">
 				<div className="flex items-center justify-between py-3 md:block md:py-5">
 					<Link
@@ -85,7 +91,7 @@ const Navbar = () => {
 								className="text-gray-700 hover:text-indigo-600"
 							>
 								<Link
-									onClick={handleLinkClick}
+									onClick={() => handleLinkClick(item)}
 									to={item.path}
 									className="block"
 								>
@@ -94,26 +100,31 @@ const Navbar = () => {
 							</li>
 						))}
 						<span className="hidden h-6 w-px bg-gray-300 md:block"></span>
-						<div className="items-center gap-x-6 space-y-3 md:flex md:space-y-0">
-							<li>
-								<Link
-									onClick={closeNavbar}
-									to="/login"
-									className="block rounded-lg border py-3 text-center text-gray-700 hover:text-indigo-600 md:border-none"
-								>
-									Log in
-								</Link>
-							</li>
-							<li>
-								<Link
-									onClick={closeNavbar}
-									to="/signin"
-									className="block rounded-lg bg-indigo-600 px-4 py-3 text-center font-medium text-white shadow hover:bg-indigo-500 active:bg-indigo-700 active:shadow-none md:inline"
-								>
-									Sign in
-								</Link>
-							</li>
-						</div>
+
+						{!userToken || !user ? (
+							<div className="items-center gap-x-6 space-y-3 md:flex md:space-y-0">
+								<li>
+									<Link
+										onClick={closeNavbar}
+										to="/login"
+										className="block rounded-lg border py-3 text-center text-gray-700 hover:text-indigo-600 md:border-none"
+									>
+										Log in
+									</Link>
+								</li>
+								<li>
+									<Link
+										onClick={closeNavbar}
+										to="/signin"
+										className="block rounded-lg bg-indigo-600 px-4 py-3 text-center font-medium text-white shadow hover:bg-indigo-500 active:bg-indigo-700 active:shadow-none md:inline"
+									>
+										Sign in
+									</Link>
+								</li>
+							</div>
+						) : (
+							<DropdownBasic />
+						)}
 					</ul>
 				</div>
 			</div>
