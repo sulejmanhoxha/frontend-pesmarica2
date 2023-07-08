@@ -28,6 +28,20 @@ const LatestSongsList = () => {
 						</div>
 					</li>
 				))}
+
+				<li className="flex items-start gap-4 px-4 py-3">
+					<div className="flex min-h-[2rem] flex-col items-start justify-center gap-0">
+						<h4 className="text-base text-slate-700 ">
+							<Link
+								to="songs/"
+								className="mx-auto mt-8 text-sm font-semibold text-blue-600 hover:text-neutral-600"
+								title="view more"
+							>
+								View more songs »
+							</Link>
+						</h4>
+					</div>
+				</li>
 			</ul>
 		</>
 	);
