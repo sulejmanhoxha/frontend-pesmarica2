@@ -1,10 +1,9 @@
-import React from "react";
 import { Link } from "react-router-dom";
 
-const Card = ({ image, title }) => {
+const Card = ({ image, title, url }) => {
 	return (
 		<Link
-			to="/"
+			to={`/artists/${url}`}
 			className="mx-auto flex w-full max-w-sm flex-col items-center justify-center"
 		>
 			<div className=" flex w-full max-w-sm flex-col items-center justify-center">

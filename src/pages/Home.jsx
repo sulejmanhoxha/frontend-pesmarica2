@@ -15,15 +15,15 @@ import List from "../components/LatestSongsList";
 
 const Home = () => {
 	const artists = [
-		{ image: bijelo_dugme, title: "Bijelo Dugme" },
-		{ image: aca_lukas, title: "Aca Lukas" },
-		{ image: aco_pejovic, title: "Aco Pejović" },
-		{ image: dino_merlin, title: "Dino Merlin" },
-		{ image: divlje_jagode, title: "Divlje Jagode" },
-		{ image: halid_besic, title: "Halid Bešlić" },
-		{ image: parni_valjak, title: "Parni Valjak" },
-		{ image: riblja_corba, title: "Riblja Čorba" },
-		{ image: sinan_sakic, title: "Sinan Sakić" },
+		{ image: bijelo_dugme, title: "Bijelo Dugme", url: 5 },
+		{ image: aca_lukas, title: "Aca Lukas", url: 49 },
+		{ image: aco_pejovic, title: "Aco Pejović", url: 48 },
+		{ image: dino_merlin, title: "Dino Merlin", url: 76 },
+		{ image: divlje_jagode, title: "Divlje Jagode", url: 20 },
+		{ image: halid_besic, title: "Halid Bešlić", url: 38 },
+		{ image: parni_valjak, title: "Parni Valjak", url: 79 },
+		{ image: riblja_corba, title: "Riblja Čorba", url: 230 },
+		{ image: sinan_sakic, title: "Sinan Sakić", url: 9 },
 	];
 
 	return (
@@ -38,6 +38,7 @@ const Home = () => {
 								key={artist.title}
 								image={artist.image}
 								title={artist.title}
+								url={artist.url}
 							/>
 						))}
 					</main>
