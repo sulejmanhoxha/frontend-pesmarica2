@@ -1,14 +1,15 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import DataContext from "../context/DataContext";
+import { Link } from "react-router-dom";
 
-const AvatarDropdown = () => {
+const UserDropdown = () => {
 	const { user } = useContext(DataContext);
 	const [state, setState] = useState(false);
 	const profileRef = useRef();
 
 	const navigation = [
-		{ title: "Profile", path: "javascript:void(0)" },
-		{ title: "Add Songs", path: "javascript:void(0)" },
+		{ title: "Profile", path: "/profile" },
+		{ title: "Add Songs", path: "/add-song" },
 	];
 
 	useEffect(() => {
@@ -37,12 +38,12 @@ const AvatarDropdown = () => {
 			>
 				{navigation.map((item, idx) => (
 					<li key={idx}>
-						<a
+						<Link
 							className="block whitespace-nowrap  px-4 py-2 text-gray-600 hover:bg-slate-100 hover:text-gray-900"
-							href={item.path}
+							to={item.path}
 						>
 							{item.title}
-						</a>
+						</Link>
 					</li>
 				))}
 				<button className="block w-full border-t px-4 py-2 text-left text-gray-600 hover:bg-red-300 hover:text-gray-900">
@@ -53,4 +54,4 @@ const AvatarDropdown = () => {
 	);
 };
 
-export default AvatarDropdown;
+export default UserDropdown;

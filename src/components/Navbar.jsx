@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import DataContext from "../context/DataContext";
-import DropdownBasic from "./UserDropdown";
+import UserDropdown from "./UserDropdown";
 const Navbar = () => {
 	const [state, setState] = useState(false);
 	const { setCurrentSongPage, userToken, user } = useContext(DataContext);
@@ -123,7 +123,7 @@ const Navbar = () => {
 								</li>
 							</div>
 						) : (
-							<DropdownBasic />
+							<UserDropdown />
 						)}
 					</ul>
 				</div>

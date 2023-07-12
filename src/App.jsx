@@ -11,6 +11,8 @@ import About from "./pages/About";
 import Missing from "./pages/Missing";
 import SignIn from "./pages/SignIn";
 import Login from "./pages/Login";
+import AddSong from "./pages/AddSong";
+import Profile from "./pages/Profile";
 
 import { DataProvider } from "./context/DataContext";
 
@@ -29,6 +31,8 @@ const App = () => {
 					<Route path="/about" element={<About />} />
 					<Route path="/login" element={<Login />} />
 					<Route path="/signin" element={<SignIn />} />
+					<Route path="/add-song" element={<AddSong />} />
+					<Route path="/profile" element={<Profile />} />
 					<Route path="*" element={<Missing />} />
 				</Routes>
 				<Footer />
